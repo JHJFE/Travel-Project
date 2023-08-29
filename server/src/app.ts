@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-
+import issueToken from './token'
 const app = express()
 
 type Data = {
@@ -13,6 +13,12 @@ const sendData: Data = {
   age: 3,
   url: 'tistory.com',
 }
+
+app.get('/token', (req: Request, res: Response) => {
+  const tokenPayload = { userID: 'test', role: 'user' }
+  const token = issueToken(tokenPayload)
+  res.send({ token })
+})
 
 app.get('/get', (req: Request, res: Response) => {
   res.send(sendData)
